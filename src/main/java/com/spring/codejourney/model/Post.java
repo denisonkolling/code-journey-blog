@@ -28,7 +28,7 @@ public class Post {
     @Lob
     private String texto;
 
-    public Long id() {
+    public Long getId() {
         return id;
     }
 
@@ -36,7 +36,7 @@ public class Post {
         this.id = id;
     }
 
-    public String titulo() {
+    public String getTitulo() {
         return titulo;
     }
 
@@ -44,7 +44,7 @@ public class Post {
         this.titulo = titulo;
     }
 
-    public String autor() {
+    public String getAutor() {
         return autor;
     }
 
@@ -52,7 +52,7 @@ public class Post {
         this.autor = autor;
     }
 
-    public LocalDate data() {
+    public LocalDate getData() {
         return data;
     }
 
@@ -60,7 +60,7 @@ public class Post {
         this.data = data;
     }
 
-    public String texto() {
+    public String getTexto() {
         return texto;
     }
 
