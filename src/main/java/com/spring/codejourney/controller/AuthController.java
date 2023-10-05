@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,9 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(){
@@ -57,12 +61,16 @@ public class AuthController {
         try {
 
             user.setRole("USER");
+            String rawPassword = user.getPassword();
+            user.setPassword(encoder.encode(user.getPassword()));
 
             User newUser = userService.createUser(user);
+
             if(newUser == null){
                 return "redirect:/register?error";
             }
 
+            //TODO: Fix
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
             SecurityContext securityContext = SecurityContextHolder.getContext();
             securityContext.setAuthentication(authentication);

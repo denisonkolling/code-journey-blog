@@ -8,7 +8,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -30,6 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/posts").permitAll()
+                .requestMatchers("/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -42,19 +44,18 @@ public class SecurityConfig {
     //TODO - Implementar  proteção CSRF (Cross-Site Request Forgery)
     //TODO - Atualizar métodos HTTP Security
 
-    @SuppressWarnings("deprecation")
+
     @Bean
-    public NoOpPasswordEncoder passwordEncoder() {
-        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, NoOpPasswordEncoder noOpPasswordEncoder)
+    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder)
             throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(noOpPasswordEncoder);
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         return authenticationManagerBuilder.build();
     }
 
 }
-
