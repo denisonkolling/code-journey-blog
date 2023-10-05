@@ -29,13 +29,18 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests()
                 .requestMatchers("/login").permitAll()
-                .anyRequest().authenticated();
-        http
+                .requestMatchers("/posts").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .formLogin()
-                .loginPage("/login");
-
+                .loginPage("/login")
+                .and()
+                .csrf().disable();
         return http.build();
     }
+
+    //TODO - Implementar  proteção CSRF (Cross-Site Request Forgery)
+    //TODO - Atualizar métodos HTTP Security
 
     @SuppressWarnings("deprecation")
     @Bean
@@ -50,8 +55,6 @@ public class SecurityConfig {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(noOpPasswordEncoder);
         return authenticationManagerBuilder.build();
     }
-
-
 
 }
 
