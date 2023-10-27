@@ -70,7 +70,8 @@ public class AuthController {
                 return "redirect:/register?error";
             }
 
-            //TODO: Fix
+            //TODO: Fix retorno usuário inexistente ou senha
+
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
             SecurityContext securityContext = SecurityContextHolder.getContext();
             securityContext.setAuthentication(authentication);

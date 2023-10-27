@@ -20,6 +20,7 @@ public class DummyData {
     public void savePosts(){
 
         List<Post> postList = new ArrayList<>();
+
         Post post1 = new Post();
         post1.setAutor("Bruno Alexandre");
         post1.setData(LocalDate.now());

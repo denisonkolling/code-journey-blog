@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -28,16 +29,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests()
-                .requestMatchers("/login").permitAll()
-                .requestMatchers("/posts").permitAll()
-                .requestMatchers("/register").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .and()
-                .csrf().disable();
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests( authorize -> authorize
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/posts").permitAll()
+                        .requestMatchers("/register").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form .loginPage("/login"))
+                .logout( logout -> logout .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll());
+
         return http.build();
     }
 
@@ -51,8 +52,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder)
-            throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         return authenticationManagerBuilder.build();

@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "TB_POST")
+@Table(name = "TB_POSTS")
 
 public class Post {
 
