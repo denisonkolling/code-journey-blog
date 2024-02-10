@@ -17,11 +17,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private UserService userService;
+    private final UserService userService;
 
     private final UserServiceImpl userDetailsService;
 
-    public SecurityConfig(UserServiceImpl userDetailsService) {
+    public SecurityConfig(UserService userService, UserServiceImpl userDetailsService) {
+        this.userService = userService;
         this.userDetailsService = userDetailsService;
     }
 

@@ -10,8 +10,6 @@
 <main class="flex-shrink-0">
   <section layout:fragment="body" class="py-5">
     <div class="container mt-4 col-md-4">
-      <div th:if="${param.error}" class="error">Registration failed
-      </div>
       <div class="card">
         <div class='card-header text-center fs-4'>Sign Up</div>
           <form class="row g-3 p-4" role="form" th:action="@{/register}" method="post" th:object="${user}">
@@ -42,6 +40,8 @@
             <button type="submit" class="btn btn-secondary">Sign Up</button>
           </div>
         </form>
+      </div>
+      <div th:if="${param.error}" class="error fs-6 mt-2 alert alert-danger">Registration failed
       </div>
     </div>
   </section>

@@ -4,46 +4,47 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout}">
 <head>
-  <title>Login</title>
+    <title>Login</title>
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
-  <section layout:fragment="body" class="py-5">
-    <div class="container mt-4 col-md-4">
-      <div th:if="${param.error}" class="alert alert-danger" >
-        Wrong email or password
-      </div>
-      <div class="card">
-        <div class='card-header text-center fs-4'>User Login</div>
-        <form class="row g-3 p-4" role="form" th:action="@{/login}" method="post" >
-          <div class="col-12">
-            <label for="email" class="form-label">Email</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="username"
-                    placeholder="Email"
-            >
-          </div>
-          <div class="col-12">
-            <label for="password" class="form-label">Password</label>
-            <input
-                    type="password"
-                    class="form-control"
-                    id="password"
-                    name="password"
-                    placeholder="Password"
-            >
-          </div>
-          <div class="col-12">
-            <a th:href="@{/register}" class="btn btn-black">Don't have an account already? Register Here.</a>
-            <button type="submit" class="btn btn-secondary">Login</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
+    <section layout:fragment="body" class="py-5">
+        <div class="container mt-4 col-md-4">
+            <div class="card">
+                <div class='card-header text-center fs-4'>User Login</div>
+                <form class="row g-3 p-4" role="form" th:action="@{/login}" method="post">
+                    <div class="col-12">
+                        <label for="email" class="form-label">Email</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="email"
+                                name="username"
+                                placeholder="Email"
+                        >
+                    </div>
+                    <div class="col-12">
+                        <label for="password" class="form-label">Password</label>
+                        <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                name="password"
+                                placeholder="Password"
+                        >
+                    </div>
+                    <div class="col-12">
+                        <a th:href="@{/register}" class="btn btn-black">Don't have an account already? Register
+                            Here.</a>
+                        <button type="submit" class="btn btn-secondary">Login</button>
+                    </div>
+                </form>
+            </div>
+            <div th:if="${param.error}" class="fs-6 mt-2 alert alert-danger">
+                Wrong email or password
+            </div>
+        </div>
+    </section>
 </main>
 </body>
 </html>
